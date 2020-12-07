@@ -60,6 +60,7 @@ app.use(async (req, res) => {
 
   res.status(response.status);
   res.set(response.headers);
+  res.set('Access-Control-Expose-Headers', '*');
   response.data.pipe(res);
 })
 
