@@ -7,7 +7,8 @@ const queryString = require("querystring");
 require('https').globalAgent.options.ca = require('ssl-root-cas/latest').create();
 
 const app = express();
-app.use(cors());
+
+app.use(cors({ credentials: true, origin: process.env.TARGET || process.argv[2] || "http://localhost:34685" }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -54,17 +55,17 @@ app.use(async (req, res) => {
       ...options,
     });
   } catch (e) {
-    console.error(e);
-    return res.end();
+    console.log(e.message);
+    return res.status(588).end();
   }
-
+  
   res.status(response.status);
-  res.set(response.headers);
-  res.set('Access-Control-Expose-Headers', '*');
+  res.header(response.headers);
   response.data.pipe(res);
 })
 
+const port = process.env.PORT || 3000;
 
-app.listen(process.env.PORT || 3000, () => {
-  console.log("Listing at localhost:3000");
+app.listen(port, () => {
+  console.log(`Listing at localhost:${port}`);
 })
