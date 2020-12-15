@@ -60,6 +60,11 @@ app.use(async (req, res) => {
     }
   }
   
+  if (!!response.headers['set-cookie']) {
+    response.headers['set-cookie'] = response.headers['set-cookie']+"SameSite=None;";
+  }
+  
+
   res.status(response.status);
   res.header(response.headers);
   response.data.pipe(res);
