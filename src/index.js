@@ -59,14 +59,17 @@ app.use(async (req, res) => {
       response = e.response;
     }
   }
-  
-  if (!!response.headers['set-cookie']) {
-    response.headers['Set-Cookie'] = response.headers['set-cookie'].map(e => e+"; SameSite=None; Secure;");
+
+  if (!!response.headers) {
+
+    if (!!response.headers['set-cookie']) {
+      response.headers['Set-Cookie'] = response.headers['set-cookie'].map(e => e + "; SameSite=None; Secure;");
+    }
+
+    res.header(response.headers);
   }
-  
 
   res.status(response.status);
-  res.header(response.headers);
   response.data.pipe(res);
 })
 
