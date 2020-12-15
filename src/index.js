@@ -61,7 +61,7 @@ app.use(async (req, res) => {
   }
   
   if (!!response.headers['set-cookie']) {
-    response.headers['set-cookie'] = response.headers['set-cookie']+"SameSite=None;";
+    response.headers['Set-Cookie'] = response.headers['set-cookie'].map(e => e+"; SameSite=None; Secure;");
   }
   
 
