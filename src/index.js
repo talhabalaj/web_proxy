@@ -55,8 +55,9 @@ app.use(async (req, res) => {
       ...options,
     });
   } catch (e) {
-    console.log(e.message);
-    return res.status(588).end();
+    if (!!e.response) {
+      response = e.response;
+    }
   }
   
   res.status(response.status);
