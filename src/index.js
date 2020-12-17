@@ -8,7 +8,7 @@ require('https').globalAgent.options.ca = require('ssl-root-cas/latest').create(
 
 const app = express();
 
-app.use(cors({ credentials: true, origin: process.env.TARGET || process.argv[2] || "http://localhost:5000" }));
+app.use(cors({ credentials: true, origin:[ process.env.TARGET || process.argv[2] , "http://localhost:5000"] }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
